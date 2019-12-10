@@ -1,0 +1,124 @@
+<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+
+
+<style>
+#container {
+    height: 900px;
+
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+
+
+</style>
+
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/maps/modules/data.js"></script>
+<script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+<script src="https://code.highcharts.com/mapdata/countries/us/us-all.js"></script>
+<script src="https://code.highcharts.com/mapdata/custom/usa-and-canada.js"></script>
+<script src="https://code.highcharts.com/js/themes/dark-unica.js"></script>
+
+<div id="container"></div>
+<script>
+Highcharts.getJSON('data/business_map_rating.json', function (data) {
+
+  // Make codes uppercase to match the map data
+  data.forEach(function (p) {
+      p.code = p.code.toUpperCase();
+  });
+
+
+  Highcharts.mapChart('container', {
+      // chart 전반적
+      chart: {
+          map: 'custom/usa-and-canada',
+          borderWidth: 1
+      },
+
+      title: {
+          text: 'average stars',
+          style: {
+              fontFamily: 'Ubuntu',
+              fontStyle:"bold",
+              fontSize: '30px',
+              color : '#bdbdbd'
+          }
+      },
+
+      exporting: {
+          sourceWidth: 600,
+          sourceHeight: 500
+      },
+
+      legend: {
+            title: {
+                text: 'Rating',
+                style: {
+                    fontFamily: 'Ubuntu',
+                    fontSize: '15px',
+                    color : '#bdbdbd'
+                }
+            },
+
+            layout: 'horizontal',
+
+            verticalAlign: 'bottom',
+
+        },
+
+      mapNavigation: {
+          enabled: true
+      },
+
+      colorAxis: {
+          min: 1,
+          max : 5,
+          labels: {
+            style: {
+               color: '#BDBDBD',
+               fontSize: '17px'
+
+            }
+         },
+
+          stops: [
+            /*
+              [0.2, '#fdae61'],
+              [0.4, '#fee08b'],
+              [0.6, '#ffffbf'],
+              [0.8, '#d9ef8b'],
+              [1, '#a6d96a']
+              */
+
+              [0.2, '#d7191c'],
+              [0.4, '#fdae61'],
+              [0.6, '#ffffbf'],
+              [0.8, '#a6d96a'],
+              [1, '#1a9641']
+
+          ]
+      },
+
+      series: [{
+          animation: {
+              duration: 1000
+          },
+          data: data,
+          joinBy: ['postal-code', 'code'],
+          dataLabels: {
+              enabled: true,
+              color: '#FFFFFF',
+              format: '{point.code}'
+          },
+          name: 'Average stars',
+          tooltip: {
+              pointFormat: '{point.fn}: {point.value}'
+          }
+      }]
+  });
+});
+
+</script>

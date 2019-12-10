@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+
+<link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+<script src="https://d3js.org/d3.v4.js"></script>
+<style>
+#output{
+font-size: 20px;
+font-family: Inconsolata;
+color : #FFF;
+}
+line{
+stroke : #FFF;
+}
+path{
+stroke : #FFF;
+}
+text{
+fill : #FFF;
+}
+</style>
+
+<div id="my_dataviz"></div>
+<div id="output">Group : <br>Name : </div>
+
+<script>
+
+var margin = {top: 10, right: 30, bottom: 50, left: 60},
+    width = 500 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+
+d3.csv("data/user_cluster_remove.csv", function(data) {
+
+
+  var x = d3.scaleLinear()
+    .domain([1300,3000 ])
+    .range([ 0, width ]);
+  svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
+
+  svg.append("text")
+    .attr('x',210)
+    .attr("y",470)
+    .style("text-anchor","middle")
+    .text("review_count")
+
+  svg.append("text")
+        .attr("x",-240)
+        .attr("y",-45)
+        .attr("transform","rotate(-90)")
+        .text("useful")
+
+
+  var y = d3.scaleLinear()
+    .domain([1000, 60000])
+    .range([ height, 0]);
+  svg.append("g")
+    .call(d3.axisLeft(y));
+
+
+  // Color scale
+  var color = d3.scaleOrdinal()
+    .domain(["a", "b", "c" ])
+    .range([ "#badfdb", "#49beb7", "#ff8a5c"])
+
+
+  // hover 함수
+  var highlight = function(d){
+
+    selected_specie = d.cluster
+
+    d3.selectAll(".dot")
+      .transition()
+      .duration(200)
+      .style("fill", "lightgrey")
+      .attr("r", 3)
+
+    d3.selectAll("." + selected_specie)
+      .transition()
+      .duration(200)
+      .style("fill", color(selected_specie))
+      .attr("r", 7)
+
+
+    document.getElementById("output").innerHTML = "Gorup : " + d.cluster + "<br>Name : " + d.name;
+
+  }
+
+  // hover 외의것
+  var doNotHighlight = function(){
+    d3.selectAll(".dot")
+      .transition()
+      .duration(200)
+      .style("fill", "lightgrey")
+      .attr("r", 5 )
+  }
+
+  // 점 추가
+  svg.append('g')
+    .selectAll("dot")
+    .data(data)
+    .enter()
+    .append("circle")
+      .attr("class", function (d) { return "dot " + d.cluster } )
+      .attr("cx", function (d) { return x(d.review_count); } )
+      .attr("cy", function (d) { return y(d.useful); } )
+      .attr("r", 5)
+      .style("fill", function (d) { return color(d.cluster) } )
+    .on("mouseover", highlight)
+    .on("mouseleave", doNotHighlight )
+
+})
+
+</script>

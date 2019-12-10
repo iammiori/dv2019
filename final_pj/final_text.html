@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+  <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js" type="text/JavaScript"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+<style>
+body{
+  margin : 50px;
+  font-family: Inconsolata;
+  background-color:#252525;
+  color: #FFF;
+}
+line{
+  stroke : #FFF;
+}
+
+ text{
+  fill : #FFF;
+}
+#wordcloud{
+
+  width : 1400px;
+  height : 950px;
+  display:inline-block;
+
+}
+#knowledge{
+
+  width : 600px;
+  height : 600px;
+  display : inline-block;
+  position: absolute;
+}
+#iframe{
+  display : inline-block;
+}
+
+.links line {
+  stroke: #999;
+  stroke-opacity: 0.6;
+}
+
+.nodes circle {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+#output{
+  font-size: 25px;
+}
+p{
+  font-size: 25px;
+}
+
+</style>
+</head>
+<body>
+  <h1> Word cloud & Knowledge map with high rating store</h1>
+  <p> Click node in knowledge-map, then you can see raw data </p>
+  <p> We can see that the highly rated store has a good review. </p>
+  <div id="wrap" style="margin:auto">
+<div id="wordcloud">
+  <iframe id="cloud" src="index_wordcloud.html" width="1400px" height="980px" frameborder="0" scrolling = "no" style="position:relative; top:-40px; left:-95px;"></iframe>
+</div>
+&nbsp; &nbsp;
+<div id="knowledge">
+  <svg width="500" height="500"></svg>
+  <script src="js/ForceDirectedGraph.js"></script>
+</div>
+  <div id="output"> </div>
+</div>
+</body>
+</html>

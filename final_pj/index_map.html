@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+  <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+  <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+  <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+  <script src="https://code.highcharts.com/mapdata/countries/us/us-all.js"></script>
+  <script src="https://code.highcharts.com/mapdata/custom/usa-and-canada.js"></script>
+  <script src="https://code.highcharts.com/js/themes/dark-unica.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.4.4/proj4.js"></script>
+  <script src="https://code.highcharts.com/mapdata/countries/gb/gb-all.js"></script>
+
+<style>
+body{
+  margin : 50px;
+  font-family: Inconsolata;
+  background-color:#252525;
+  color: #FFF;
+}
+p{
+    font-family: Inconsolata;
+    font-size : 20px;
+}
+#wordcloud{
+
+  width : 1000px;
+  height : 950px;
+  display:inline-block;
+
+}
+#knowledge{
+
+  width : 600px;
+  height : 600px;
+  display : inline-block;
+  position: absolute;
+}
+#container {
+    height: 900px;
+
+    max-width: 900px;
+    margin: 0 auto;
+}
+rect {
+    stroke :none;
+}
+</style>
+</head>
+<body>
+  <h1> Map </h1>
+  <p> 1. We can know the U.S. state with high ratings.<br><br>
+  2. Based on this, one can recommend a food-and-cook travel course. </p>
+
+  <br><br>
+  <div id="wrap" style="margin:auto">
+<div id="wordcloud">
+  <div id="container"></div>
+  <script>
+  Highcharts.getJSON('data/business_map_rating.json', function (data) {
+
+    // Make codes uppercase to match the map data
+    data.forEach(function (p) {
+        p.code = p.code.toUpperCase();
+    });
+
+
+    Highcharts.mapChart('container', {
+        // chart 전반적
+        chart: {
+            map: 'custom/usa-and-canada',
+            borderWidth: 1
+        },
+
+        title: {
+            text: 'average stars',
+            style: {
+                fontFamily: 'Inconsolata',
+                fontStyle:"bold",
+                fontSize: '30px',
+                color : '#bdbdbd'
+            }
+        },
+
+        exporting: {
+            sourceWidth: 600,
+            sourceHeight: 500
+        },
+
+        legend: {
+              title: {
+                  text: 'Rating',
+                  style: {
+                      fontFamily: 'Inconsolata',
+                      fontSize: '15px',
+                      color : '#bdbdbd'
+                  }
+              },
+
+              layout: 'horizontal',
+
+              verticalAlign: 'bottom',
+
+          },
+
+        mapNavigation: {
+            enabled: true
+        },
+
+        colorAxis: {
+            min: 1,
+            max : 5,
+            labels: {
+              style: {
+                 color: '#BDBDBD',
+                 fontSize: '17px'
+
+              }
+           },
+
+            stops: [
+              /*
+                [0.2, '#fdae61'],
+                [0.4, '#fee08b'],
+                [0.6, '#ffffbf'],
+                [0.8, '#d9ef8b'],
+                [1, '#a6d96a']
+                */
+
+                [0.2, '#d7191c'],
+                [0.4, '#fdae61'],
+                [0.6, '#ffffbf'],
+                [0.8, '#a6d96a'],
+                [1, '#1a9641']
+
+            ]
+        },
+
+        series: [{
+            animation: {
+                duration: 1000
+            },
+            data: data,
+            joinBy: ['postal-code', 'code'],
+            dataLabels: {
+                enabled: true,
+                color: '#FFFFFF',
+                format: '{point.code}'
+            },
+            name: 'Average stars',
+            tooltip: {
+                pointFormat: '{point.fn}: {point.value}'
+            }
+        }]
+    });
+  });
+
+  </script>
+
+</div>
+&nbsp; &nbsp;
+<div id="knowledge">
+  <div id="container2"></div>
+
+  <style>
+  #container2 {
+      height: 680px;
+      min-width: 1200px;
+      max-width: 1200px;
+      margin: 0 auto;
+  }
+  .loading {
+      margin-top: 10em;
+      text-align: center;
+      color: gray;
+  }
+  </style>
+
+  <script>
+    // Initialize the chart
+    var chart = Highcharts.mapChart('container2', {
+
+        title: {
+            text: 'recommend route (west)'
+        },
+
+        legend: {
+            align: 'left',
+            layout: 'vertical',
+            floating: true
+        },
+
+        mapNavigation: {
+            enabled: true
+        },
+
+        tooltip: {
+            formatter: function () {
+                return this.point.id + (
+                    this.point.lat ?
+                        '<br>Lat: ' + this.point.lat + ' Lon: ' + this.point.lon : ''
+
+                );
+            }
+        },
+
+        plotOptions: {
+            series: {
+                  marker: {
+                      fillColor: 'rgba(161,215,106, 0.3)',
+                      lineWidth: 1.5,
+                      lineColor: '#a1d76a'
+                  }
+            }
+        },
+
+        series: [{
+            //us/us-all 로 미국 지도 불러오기
+            mapData: Highcharts.maps['countries/us/us-all'],
+            name: 'Basemap',
+            borderColor: '#707070',
+            nullColor: 'rgba(200, 200, 200, 0.3)',
+            showInLegend: false
+        }, {
+            name: 'Separators',
+            type: 'mapline',
+            data: Highcharts.geojson(Highcharts.maps['countries/us/us-all'], 'mapline'),
+            color: '#707070',
+            showInLegend: false,
+            enableMouseTracking: false
+        }, {
+
+            type: 'mappoint',
+            name: 'CITY',
+            dataLabels: {
+                format: '{point.id}'
+            },
+          //가고 싶은 도시 찍기
+            data: [{
+                id: 'Sanfrancisco',
+                lat: 37.7272,
+                lon: -123.032,
+                dataLabels: {
+                    align: 'left',
+                    x: 7,
+                    y: -5,
+                    verticalAlign: 'middle'
+                }
+            }, {
+                id: 'Las Vegas',
+                lat: 36.17497,
+                lon: -115.13722,
+                 dataLabels: {
+
+                    y: -15,
+                    verticalAlign: 'middle'
+                }
+
+            }, {
+                id: 'Grand Canyon',
+                lat:  36.051535,
+                  lon: -112.137584,
+                 dataLabels: {
+                    align: 'left',
+                    x: 5,
+                    y: 7,
+                    verticalAlign: 'middle'
+                }
+            },{
+                id: 'Bryce Canyon',
+                lat:  37.629233,
+                lon:  -112.167695,
+                dataLabels: {
+
+                    y: -17,
+                    verticalAlign: 'middle'
+                }
+            }, {
+                id: 'Phoenix',
+                lat:  33.68158,
+                  lon: -112.072852,
+                 dataLabels: {
+                    align: 'left',
+                    x: 5,
+                    y: 7,
+                    verticalAlign: 'middle'
+                }
+            },{
+                id: "Sedona",
+                lat:  34.869385		,
+                lon:  -111.770738,
+
+                dataLabels: {
+                    x:10,
+                    y: 17,
+                    verticalAlign: 'middle'
+                }
+            },{
+                id: 'LA',
+                lat: 34.0194,
+                lon: -118.411,
+                dataLabels: {
+                    align: 'left',
+                    x: 7,
+                    verticalAlign: 'middle'
+                }
+            }]
+        },
+        {
+         // food store
+         type: 'mappoint',
+         name: 'STORE',
+         dataLabels: {
+             format: '{point.id}'
+         },
+          marker: {
+                 fillColor: 'rgba(233,163,201, 0.3)',
+                 lineWidth: 1,
+                 lineColor: '#e9a3c9'
+             },
+             data:
+             [
+             {
+                 id: "Beachside Tans",
+                 lat:  33.401362		,
+                 lon:  -111.728268,
+                 stars : 5.0,
+
+                 dataLabels: {
+                     x:10,
+                     y: 17,
+                     verticalAlign: 'middle'
+                 }
+             },{
+                 id: "Rebecca Vinacour",
+                 lat:  33.457453	,
+                 lon:  -112.060988,
+
+                 dataLabels: {
+                     x:10,
+                     y: 17,
+                     verticalAlign: 'middle'
+                 }
+             },{
+                 id: "Las Vegas Highrollers",
+                 lat:  36.128561	,
+                 lon:  -115.17113,
+
+                 dataLabels: {
+                     x:10,
+                     y: 17,
+                     verticalAlign: 'middle'
+                 }
+             },{
+                 id: 'Home Run Stadium Batting Cages',
+                 lat:  33.414829,
+                 lon:  -111.791855,
+
+                 dataLabels: {
+
+                     y: 17,
+                     verticalAlign: 'middle'
+                 }
+             },{
+                 id: 'CM2 Pizzeria & Bakeshop',
+                 lat:  33.590790	,
+                 lon:  -111.786674,
+
+                 dataLabels: {
+                     x:10,
+                     y: 17,
+                     verticalAlign: 'middle'
+                 }
+             },{
+                 id: 'Serafina Coffee Roasters',
+                 lat:  33.446968	,
+                 lon:  -112.0747354,
+
+                 dataLabels: {
+                     x:10,
+                     y: 17,
+                     verticalAlign: 'middle'
+                 }
+             },{
+                 id: '99 Cents Only Stores',
+                 lat:  33.540399	,
+                 lon:  -111.889220,
+
+                 dataLabels: {
+                     x:10,
+                     y: 17,
+                     verticalAlign: 'middle'
+                 }
+             },{
+                 id: 'Gelato di Milano',
+                 lat:  36.098485		,
+                 lon:  -115.242419,
+
+                 dataLabels: {
+                     x:10,
+                     y: 17,
+                     verticalAlign: 'middle'
+                 }
+             },{
+                 id: 'Electric Daisy Carnival',
+                 lat:  34.27326		,
+                 lon:  -117.009439,
+
+                 dataLabels: {
+                     x:10,
+                     y: 17,
+                     verticalAlign: 'middle'
+                 }
+             },{
+                 id: "Carluccio's Tivoli Gardens",
+                 lat:  36.100016		,
+                 lon:  -115.128529,
+
+                 dataLabels: {
+                     x:10,
+                     y: 17,
+                     verticalAlign: 'middle'
+                 }
+             },{
+                 id: "Cave Creek Coffee Company",
+                 lat:  33.8332786		,
+                 lon:  -111.951345,
+
+                 dataLabels: {
+                     x:10,
+                     y: 17,
+                     verticalAlign: 'middle'
+                 }
+             }
+             ]
+      }]
+  });
+
+    // Path 설정
+    function pointsToPath(from, to, invertArc) {
+        var arcPointX = (from.x + to.x) / (invertArc ? 2.4 : 1.5),
+            arcPointY = (from.y + to.y) / (invertArc ? 2.4 : 1.9);
+        return 'M' + from.x + ',' + from.y + 'Q' + arcPointX + ' ' + arcPointY +
+                ',' + to.x + ' ' + to.y;
+    }
+
+    var startPoint = chart.get('Sanfrancisco'),
+        foodPoint = chart.get('Phoenix'),
+        foodPoint2 = chart.get("Las Vegas");
+
+    // 가고싶은 path
+    chart.addSeries({
+        name: 'WANTED ROUTE',
+        type: 'mapline',
+        lineWidth: 2,
+        color: "#a1d76a",
+        data: [{
+            id: 'Sanfrancisco - Bryce Canyon',
+            path: pointsToPath(startPoint, chart.get('Bryce Canyon'))
+        },{
+            id: 'Bryce Canyon - Grand Canyon',
+            path: pointsToPath(chart.get('Bryce Canyon'), chart.get('Grand Canyon'))
+        },{
+            id: 'Grand Canyon - Sedona',
+            path: pointsToPath(chart.get('Grand Canyon'), chart.get('Sedona'))
+        },{
+            id: 'Sedona - LA',
+            path: pointsToPath(chart.get('Sedona'), chart.get('LA'))
+        },{
+            id: 'LA - Sanfrancisco',
+            path: pointsToPath(chart.get('LA'), chart.get('Sanfrancisco'))
+        }]
+    });
+
+
+    // 가까운 path
+    chart.addSeries({
+        name: 'NEAREST STORE (HIGH RATING)',
+        type: 'mapline',
+        lineWidth: 1,
+        color: '#e9a3c9',
+        data: [{
+            id: 'Phoenix - Home Run Stadium Batting Cages',
+            path: pointsToPath( foodPoint, chart.get('Home Run Stadium Batting Cages'))
+        },{
+            id: 'Phoenix - CM2 Pizzeria & Bakeshop',
+            path: pointsToPath( foodPoint, chart.get('CM2 Pizzeria & Bakeshop'))
+        },{
+            id: 'Phoenix - Serafina Coffee Roasters',
+            path: pointsToPath( foodPoint, chart.get('Serafina Coffee Roasters'))
+        },{
+            id: 'Phoenix - 99 Cents Only Stores',
+            path: pointsToPath( foodPoint, chart.get('99 Cents Only Stores'))
+        },{
+            id: 'Phoenix - Cave Creek Coffee Compan',
+            path: pointsToPath( foodPoint, chart.get('Cave Creek Coffee Company'))
+        },{
+            id: 'Las Vegas - Gelato di Milano',
+            path: pointsToPath( foodPoint2, chart.get('Gelato di Milano'))
+        },{
+            id: "Las Vegas - Carluccio's Tivoli Gardens",
+            path: pointsToPath( foodPoint2, chart.get("Carluccio's Tivoli Gardens"))
+        },{
+            id: 'LA - Electric Daisy Carnival',
+            path: pointsToPath( chart.get('LA'), chart.get('Electric Daisy Carnival'))
+        },{
+            id: 'Phoenix - Rebecca Vinacour',
+            path: pointsToPath( chart.get('Phoenix'), chart.get('Rebecca Vinacour'))
+        }]
+    });
+
+    // 추천 path
+    chart.addSeries({
+        name: 'RECOMMENED ROUTE',
+        type: 'mapline',
+        lineWidth: 2,
+        color: '#c51b7d',
+        data: [{
+            id: 'Sanfrancisco - Las Vegas',
+            path: pointsToPath(startPoint, chart.get('Las Vegas'))
+        },{
+            id: 'Las Vegas - Bryce Canyon',
+            path: pointsToPath(chart.get('Las Vegas'), chart.get('Bryce Canyon'))
+        },{
+            id: 'Bryce Canyon - Grand Canyon',
+            path: pointsToPath(chart.get('Bryce Canyon'), chart.get('Grand Canyon'))
+        },{
+            id: 'Grand Canyon - Sedona',
+            path: pointsToPath(chart.get('Grand Canyon'), chart.get('Sedona'))
+        },{
+            id: 'Sedona - Phoenix',
+            path: pointsToPath(chart.get('Sedona'), chart.get('Phoenix'))
+        },{
+            id: 'Phoenix - LA',
+            path: pointsToPath(chart.get('Phoenix'), chart.get('LA'))
+        },{
+            id: 'LA - Sanfrancisco',
+            path: pointsToPath(chart.get('LA'), chart.get('Sanfrancisco'))
+        }]
+    });
+
+
+
+  </script>
+
+</div>
+
+</div>
+</body>
+</html>

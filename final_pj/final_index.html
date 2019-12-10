@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+  <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js" type="text/JavaScript"></script>
+  <style>
+  body{
+    margin : 50px;
+    font-family: Inconsolata;
+    background-color:#252525;
+    color: #FFF;
+  }
+  div {
+    display : inline;
+  }
+  #bt1 {
+      display : inline;
+      postion: absolute;
+      right:100px;
+    }
+
+#bt2 {
+    display : inline-block;
+    postion: absolute;
+
+  }
+  #explain {
+      width: 900px;
+      height: 400px;
+
+      margin:0;
+      padding:5px;
+      position: absolute;
+      left : 950px;
+      top:750px;
+  }
+  p{
+    font-size:20px;
+  }
+  #wordcloud{
+    display:inline;
+  }
+  #fdg{
+    postion:absolute;
+    top:0px;
+  }
+  .links line {
+    stroke: #999;
+    stroke-opacity: 0.6;
+  }
+
+  .nodes circle {
+    stroke: #fff;
+    stroke-width: 1.5px;
+  }
+  #boxplot line{
+    stroke : #FFF;
+  }
+  #boxplot path{
+    stroke : #FFF;
+  }
+  #boxplot text{
+    fill : #FFF;
+  }
+button{
+  font-family: Inconsolata;
+  font-weight: bold;
+  font-size:1em;
+  border-radius:0.5em;
+  border : 1px #FFF;
+  padding:5px 20px;
+  background-color: #FFF;
+}
+#title{
+  font-size: 50px;
+}
+
+
+  </style>
+</head>
+<body>
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+
+<!-- Create a div where the graph will take place -->
+
+<div>
+
+    <script>
+    function change(){
+      var chart = document.getElementById('i_bar')
+      chart.src="index_barplot_all.html"
+      var chart2 = document.getElementById('c_bar')
+      chart2.src = "index_correlation.html"
+    }
+    function change2(){
+      var chart = document.getElementById('i_bar')
+      chart.src="index_barplot.html"
+      var chart2 = document.getElementById('c_bar')
+      chart2.src = "index_correlation_remove.html"
+    }
+    function go(){
+      location.href="final_text.html"
+    }
+
+    function go2(){
+      location.href="index_map.html"
+    }
+    </script>
+  <h1> Box plot & Bar plot </h1>
+  <p> We want to know the number of rating that each user <br> x-axis : name / y-axis : review_count</p>
+    <br>
+<div id="boxplot"></div>
+<div id="barplot" style="position:absolute">
+  <iframe id="i_bar" src="index_barplot_all.html" width="2000px" height="600px" frameborder="0" style="position:relative; top:-50px;"></iframe>
+</div>
+
+<script src = "js/boxplot.js"></script>
+</div>
+<br><br> &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;    <button id="bt1" onClick="change()"> show outlier</button> &nbsp; <button id="bt2" onClick="change2()"> remove outlier </button><br><br><br>
+<br><br>
+<div>
+  <h1> Zoomalbe plot </h1>
+  <p> We can find the pattern of the month with a lot of reviews. </p>
+    <br>
+<div id="zoom"></div>
+<iframe src="index_zoom.html" width="1000px" height="420px" frameborder="0" style="overflow-y:hidden"></iframe>
+</div>
+
+<div id="explain" >
+  <p id="title"> Yelp data visulization system </p>
+  <h2> How to use </h2>
+  <p>
+  1. Click button "show outlier" or "remove outlier", <br> &nbsp; &nbsp; then bar plot and scatter plot will be changed.<br><br>
+  2. Click sort radio button. then plot will be sorted. <br><br>
+  3. Zoom the line plot / if double click : return orgin state <br> &nbsp; &nbsp; then we can see the pattern of the month with a lot of reviews.<br><br>
+  4. If you put a mouse on a scatter plot(hover), you can see the clustered group and user name.<br><br>
+  5. Click button to look word cloud or map visualization.
+  <br><br>
+  &nbsp; &nbsp; <button onClick="go()"> word cloud </button>   &nbsp; &nbsp; <button onClick="go2()"> map </button>
+</p>
+<br><br>
+<h1> Pattern of the month with a lot of reviews.  </h1>
+<p>
+1. It can be seen that there are a lot of reviews at the end of the year.<br><br>
+
+<br><br>
+<h1> Highly reveiw_count and highly useful group </h1>
+<p>
+1. correlation with review_count and useful group is <b>0.6</b> <br>
+2. We can choose the group "b" which both high
+</div>
+<br><br><br>
+<div id="clustering">
+  <h1>Scatter plot </h1>
+<iframe id = "c_bar" src="index_correlation.html" width="550px" height="800px" frameborder="0" ></iframe>
+
+
+</p>
+
+</div>
+
+
+</body>
+</html>

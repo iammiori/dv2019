@@ -1,0 +1,102 @@
+{
+  "nodes":[
+    {"id": "good", "group" :1, "cnt": 336},
+    {"id": "decent", "group" :2, "cnt" : 56},
+    {"id": "bad", "group" :2, "cnt":10},
+    {"id": "horrible", "group" :2, "cnt":21},
+    {"id": "terrible", "group" :2, "cnt":28},
+    {"id": "service", "group" :1, "cnt": 168},
+    {"id": "staff", "group" :2, "cnt" : 78},
+    {"id": "slow", "group" :2, "cnt":36},
+    {"id": "awful", "group" :2, "cnt":47},
+    {"id": "friendly", "group" :2, "cnt":20},
+    {"id": "nothing", "group" :2, "cnt" : 83},
+    {"id": "foods", "group" :1, "cnt" : 50},
+    {"id": "never", "group" :2, "cnt" : 100},
+    {"id": "again", "group" :2, "cnt" : 40},
+    {"id": "last", "group" :2, "cnt" : 60},
+    {"id": "poor", "group" :2, "cnt" : 30},
+    {"id": "quality", "group" :1, "cnt" : 62},
+    {"id": "atmosphere", "group" :2, "cnt" : 10},
+    {"id": "overpriced", "group" :2, "cnt" : 30},
+    {"id": "mediocre", "group" :2, "cnt" : 23},
+    {"id": "selection", "group" :2, "cnt" : 36},
+    {"id": "lack", "group" :2, "cnt" : 21},
+    {"id": "low", "group" :2, "cnt" : 30},
+    {"id": "hella", "group" :2, "cnt" : 21},
+    {"id": "ridiculously", "group" :2, "cnt" : 30},
+    {"id": "eaten", "group" :2, "cnt" : 10},
+    {"id": "overcooked", "group" :2, "cnt" : 29},
+    {"id": "price", "group" :1, "cnt" : 53},
+    {"id": "cheap", "group" :2, "cnt" : 39},
+    {"id": "tasteless", "group" :2, "cnt" : 57},
+    {"id": "flavorless", "group" :2, "cnt" : 32}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ],
+  "links":[
+    {"source": "good", "target" :"decent","value":7},
+    {"source": "good", "target" :"bad","value":8},
+    {"source": "good", "target" :"horrible","value":7},
+    {"source": "good", "target" :"terrible","value":7},
+    {"source": "service", "target" :"staff","value":7},
+    {"source": "service", "target" :"slow","value":6},
+    {"source": "service", "target" :"awful","value":6},
+    {"source": "service", "target" :"friendly","value":7},
+    {"source": "service", "target" :"nothing","value":6},
+    {"source": "service", "target" :"bad","value":4},
+    {"source": "service", "target" :"terrible","value":8},
+    {"source": "foods", "target" :"terrible","value":7},
+    {"source": "never", "target" :"again", "value":7},
+    {"source": "never", "target" :"last","value":7},
+    {"source": "poor", "target" :"quality","value":9},
+    {"source": "poor", "target" :"atmosphere","value":9},
+    {"source": "poor", "target" :"overpriced", "value":9},
+    {"source": "poor", "target" :"mediocre","value":9},
+    {"source": "poor", "target" :"foods","value":7},
+    {"source": "quality", "target" :"selection", "value":9},
+    {"source": "quality", "target" :"low","value":8},
+    {"source": "quality", "target" :"lack","value":8},
+    {"source": "atmosphere", "target" :"hella","value":9},
+    {"source": "atmosphere", "target" :"ridiculously","value":8},
+    {"source": "foods", "target" :"lack","value":6},
+    {"source": "never", "target" :"eaten","value":6},
+    {"source": "foods", "target" :"eaten","value":6},
+    {"source": "foods", "target" :"overcooked","value":7},
+    {"source": "price", "target" :"poor","value":9},
+    {"source": "price", "target" :"overpriced","value":5},
+    {"source": "price", "target" :"cheap","value":7},
+    {"source": "foods", "target" :"tasteless","value":7},
+    {"source": "foods", "target" :"flavorless","value":7}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ]
+}

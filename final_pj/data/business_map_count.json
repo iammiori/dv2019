@@ -1,0 +1,21 @@
+[
+  {"code" : "AB", "value": 1099},
+{"code" : "AL", "value": 1},
+{"code" : "AR", "value": 1},
+{"code" : "AZ", "value": 6728},
+{"code" : "BAS", "value": 1},
+{"code" : "CA", "value": 1},
+{"code" : "CT", "value": 1},
+{"code" : "FL", "value": 1},
+{"code" : "IL", "value": 105},
+{"code" : "NC", "value": 2822},
+{"code" : "NV", "value": 7630},
+{"code" : "NY", "value": 1},
+{"code" : "OH", "value": 1467},
+{"code" : "ON", "value": 5626},
+{"code" : "PA", "value": 1521},
+{"code" : "QC", "value": 917},
+{"code" : "SC", "value": 130},
+{"code" : "TX", "value": 1},
+{"code" : "WI", "value": 246}
+]
