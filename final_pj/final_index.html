@@ -91,22 +91,22 @@ button{
     <script>
     function change(){
       var chart = document.getElementById('i_bar')
-      chart.src="index_barplot_all.html"
+      chart.src="./index_barplot_all.html"
       var chart2 = document.getElementById('c_bar')
-      chart2.src = "index_correlation.html"
+      chart2.src = "./index_correlation.html"
     }
     function change2(){
       var chart = document.getElementById('i_bar')
-      chart.src="index_barplot.html"
+      chart.src="./index_barplot.html"
       var chart2 = document.getElementById('c_bar')
-      chart2.src = "index_correlation_remove.html"
+      chart2.src = "./index_correlation_remove.html"
     }
     function go(){
-      location.href="final_text.html"
+      location.href="./final_text.html"
     }
 
     function go2(){
-      location.href="index_map.html"
+      location.href="./index_map.html"
     }
     </script>
   <h1> Box plot & Bar plot </h1>
@@ -114,7 +114,7 @@ button{
     <br>
 <div id="boxplot"></div>
 <div id="barplot" style="position:absolute">
-  <iframe id="i_bar" src="index_barplot_all.html" width="2000px" height="600px" frameborder="0" style="position:relative; top:-50px;"></iframe>
+  <iframe id="i_bar" src="./index_barplot_all.html" width="2000px" height="600px" frameborder="0" style="position:relative; top:-50px;"></iframe>
 </div>
 
 <script src = "js/boxplot.js"></script>
@@ -126,7 +126,7 @@ button{
   <p> We can find the pattern of the month with a lot of reviews. </p>
     <br>
 <div id="zoom"></div>
-<iframe src="index_zoom.html" width="1000px" height="420px" frameborder="0" style="overflow-y:hidden"></iframe>
+<iframe src="./index_zoom.html" width="1000px" height="420px" frameborder="0" style="overflow-y:hidden"></iframe>
 </div>
 
 <div id="explain" >
@@ -144,11 +144,13 @@ button{
 <br><br>
 <h1> Pattern of the month with a lot of reviews.  </h1>
 <p>
+  <b>hypothesis : </b> We can know pattern of the month with a lot of reviews. <br>
 1. It can be seen that there are a lot of reviews at the end of the year.<br><br>
 
 <br><br>
 <h1> Highly reveiw_count and highly useful group </h1>
 <p>
+  <b>hypothesis : </b> There will be a lot of usefuls if there are a lot of reviews. <br>
 1. correlation with review_count and useful group is <b>0.6</b> <br>
 2. We can choose the group "b" which both high
 </div>
