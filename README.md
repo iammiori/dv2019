@@ -12,6 +12,11 @@
 - word cloud & knowledge map
 
 ![image](https://user-images.githubusercontent.com/46439995/72221372-79556a80-359d-11ea-9697-b12014ac7e5f.png)
+<br>
+
+- map
+
+![image](https://user-images.githubusercontent.com/46439995/72221402-bfaac980-359d-11ea-8185-5570a18f1281.png)
 
 - dataset : yelp
 - web : html + js + css
